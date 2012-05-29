@@ -1,0 +1,33 @@
+{
+  "name": "jquery.jGrid",
+  "title": "jGrid Plugin",
+  "description": "Switch on / off a grid overlay on your website.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/dpiatek/jGrid",
+  "author": {
+    "name": "Dominik Piatek",
+    "email": "dominik@madebyredstar.com",
+    "url": "dominikpiatek.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dpiatek/jGrid.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dpiatek/jGrid/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/dpiatek/jGrid/blob/master/LICENSE-MIT"
+    },
+    {
+      "type": "GPL",
+      "url": "https://github.com/dpiatek/jGrid/blob/master/LICENSE-GPL"
+    }
+  ],
+  "dependencies": {
+    "jquery": "~1.5"
+  },
+  "keywords": []
+}
