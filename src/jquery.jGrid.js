@@ -8,6 +8,11 @@
 
 (function($) {
 
+  // Options - default grid
+  // Listen for keyboard shortcut
+  // Show grid setup or run from cache/local storage/whatever
+  // Draw grid
+
   // Collection method.
   $.fn.awesome = function() {
     return this.each(function() {

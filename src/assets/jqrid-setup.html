@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+	<link rel="stylesheet" href="jgrid.css">
+</head>
+<body>
+
+	<div id="jgrid-setup">
+		<form action="" method="get" accept-charset="utf-8" id="jgrid-form">
+
+			<label for="wrapper-width">Wrapper</label>
+			<input type="number" name="wrapper-width" placeholder="960" required pattern="^[0-9]+$" title="Only integer values">
+			<span>px</span>
+
+			<label for="columns">Columns</label>
+			<input type="number" name="columns" placeholder="12" required pattern="^[0-9]+$" title="Only integer values">
+
+			<label for="gutter-width">Gutter</label>
+			<input type="number" name="gutter-width" placeholder="5"  required pattern="^[0-9]+$" title="Only integer values">
+			<span>px</span>
+
+			<label for="margin-left">
+				<input type="checkbox" name="margin-left">Margin left
+			</label>
+			
+			<label for="margin-right">
+				<input type="checkbox" name="margin-right">Margin right
+			</label>
+			
+
+			<input type="submit" value="Go">
+
+		</form>
+	</div>
+
+</body>
+</html>

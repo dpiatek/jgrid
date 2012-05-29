@@ -1,0 +1,18 @@
+#jgrid-setup					 { 
+	position:fixed; 
+	top:0; 
+	right:0; 
+	width:100px; 
+	height:298px; 
+	background-color:#DDD; 
+	padding:0 10px; 
+	border-radius:0 0 0 5px; 
+	border-left:1px solid #999; 
+	border-bottom:1px solid #999; 
+}
+#jgrid-form 					 { font-family: sans-serif; color:#222; font-size:14px; }
+#jgrid-form label 				 { display:block; padding:0; margin:10px 0; cursor:pointer; }
+#jgrid-form input 				 { padding:0; margin:0; border:3px solid #FFF; border-radius:3px; }
+#jgrid-form input[type=number] 	 { width:60px; height:22px;}
+#jgrid-form input[type=checkbox] { margin-right:3px; }
+#jgrid-form input[type=submit] 	 { display:block; width:80px; height:30px; text-transform:uppercase; border:0; margin:0 0 10px; background-color:#E54D3C; color:#fff; }
