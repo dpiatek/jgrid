@@ -3,7 +3,7 @@
 	top:0; 
 	right:0; 
 	width:100px; 
-	height:298px; 
+	height:336px; 
 	background-color:#DDD; 
 	padding:0 10px; 
 	border-radius:0 0 0 5px; 
@@ -11,16 +11,22 @@
 	border-bottom:1px solid #999; 
 	z-index:999;
 }
-#jgrid-form input[type=submit] { 
+#jgrid-form input[type=submit] , #show-hide { 
 	display:block; 
 	width:80px; 
 	height:30px; 
 	text-transform:uppercase; 
 	border:0; 
+	border-radius:3px;
 	margin:0 0 10px; 
 	background-color:#E54D3C; 
 	color:#fff; 
-}	
+	cursor:pointer;
+}
+#jgrid-form input[type=submit]:hover { background-color:#992215; }
+
+#show-hide 		 {background-color:#929292; }
+#show-hide:hover { background-color:#383838; }
 
 #jgrid-form 					 { font-family: sans-serif; color:#222; font-size:14px; }
 #jgrid-form label 				 { display:block; padding:0; margin:10px 0; cursor:pointer; }
