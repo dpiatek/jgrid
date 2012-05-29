@@ -1,4 +1,4 @@
-#jgrid-setup					 { 
+#jgrid-setup { 
 	position:fixed; 
 	top:0; 
 	right:0; 
@@ -9,10 +9,48 @@
 	border-radius:0 0 0 5px; 
 	border-left:1px solid #999; 
 	border-bottom:1px solid #999; 
+	z-index:999;
 }
+#jgrid-form input[type=submit] { 
+	display:block; 
+	width:80px; 
+	height:30px; 
+	text-transform:uppercase; 
+	border:0; 
+	margin:0 0 10px; 
+	background-color:#E54D3C; 
+	color:#fff; 
+}	
+
 #jgrid-form 					 { font-family: sans-serif; color:#222; font-size:14px; }
 #jgrid-form label 				 { display:block; padding:0; margin:10px 0; cursor:pointer; }
+
 #jgrid-form input 				 { padding:0; margin:0; border:3px solid #FFF; border-radius:3px; }
 #jgrid-form input[type=number] 	 { width:60px; height:22px;}
 #jgrid-form input[type=checkbox] { margin-right:3px; }
-#jgrid-form input[type=submit] 	 { display:block; width:80px; height:30px; text-transform:uppercase; border:0; margin:0 0 10px; background-color:#E54D3C; color:#fff; }
+
+#test { font-size:60px; width:500px; margin:0 auto; }
+
+#jgrid-overlay {
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background-color:#000;
+	opacity:0.2;
+	z-index:997;
+}
+
+#jgrid-wrapper 		{ width:960px; margin:0 auto; background-color:rgb(255, 192, 203); height:100%; z-index:998; }
+#jgrid-wrapper > span { 
+	width:70px; 
+	margin-right:10px; 
+	height:100%; 
+	background-color:#000;
+	opacity:0.3;
+	display:block;
+	float:left;
+}
+#jgrid-wrapper > span:last-child 	{ margin-right:5px; }
+#jgrid-wrapper > span:first-child 	{ margin-left:5px; }
