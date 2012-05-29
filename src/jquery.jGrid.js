@@ -16,11 +16,14 @@
     var jGrid = {
 
         // Initialize plugin
-        init: function(){
+        init: function( setup ){
             var self = this;
             this.keylistener();
             this.addmenu();
+
             this.attachForm( self );
+            this.updateGrid( self );
+            $('#jgrid-setup, #jgrid-overlay, #col-width').hide();
         },
 
         // Add styles to head and append menu to body
@@ -53,7 +56,8 @@
                     isShift = true;
                 }
                 if(e.which == 76 && isCtrl && isShift) {
-                    $('#jgrid-setup, #jgrid-overlay').toggle();
+                    window.clearTimeout(updateID);
+                    $('#jgrid-setup, #jgrid-overlay, #col-width').toggle();
                 }
             });
         },
@@ -74,6 +78,7 @@
                 cols += '<span></span>';
             }
 
+            wrapper.width( setup.wrapper );
             wrapper.append(cols);
             wrapper.find('span').width(colWidth).css('margin-right', setup.gutter);
             wrapper.find('span:first-child').css('margin-left', setup.marLeft);
@@ -81,17 +86,15 @@
         },
 
         calculateGrid: function( setup ) {
-            var checkInt = /^[0-9]+$/;
-            var colWidth = ( setup.wrapper - setup.marLeft - setup.marRight - ( 11 * setup.gutter ) ) / setup.columns;
+            var colWidth = ( setup.wrapper - setup.marLeft - setup.marRight - ( (setup.columns - 1) * setup.gutter ) ) / setup.columns;
+            var checkWidth = (setup.columns * colWidth) + ( (setup.columns - 1) * setup.gutter ) + setup.marLeft + setup.marRight;
+
+            console.log(checkWidth);
+            console.log(colWidth);
+
+
             this.setupGrid( colWidth , setup );
             this.updateColsWidth( colWidth );
-
-
-            if (!checkInt.test(colWidth)) {
-                alert('Float!');
-            }
-
-            console.log(colWidth);
         },
 
         attachForm: function ( self ) {
@@ -104,14 +107,14 @@
         getData: function () {
             var setup = {};
 
-            setup.wrapper = $('input[name=wrapper]').val();
-            setup.columns = $('input[name=columns]').val();
-            setup.gutter = $('input[name=gutter]').val();
-            setup.marLeft = $('input[name=marLeft]').val();
-            setup.marRight = $('input[name=marRight]').val();
+            setup.wrapper = parseInt($('input[name=wrapper]').val(),10);
+            setup.columns = parseInt($('input[name=columns]').val(),10);
+            setup.gutter = parseInt($('input[name=gutter]').val(),10);
+            setup.marLeft = parseInt($('input[name=marLeft]').val(),10);
+            setup.marRight = parseInt($('input[name=marRight]').val(),10);
 
-            this.calculateGrid( setup );
             // console.log(setup);
+            this.calculateGrid( setup );
         },
 
         updateColsWidth: function ( colWidth ) {
@@ -121,7 +124,6 @@
                 $('body').append('<span id="col-width"></span>');
                 column = $('#col-width');
             }
-
             
             if (!(typeof colWidth === 'number' && (colWidth % 1 === 0) )) {
                 colWidth = Math.round( colWidth*100 ) / 100;
@@ -131,8 +133,13 @@
                 column.css('color','#EEE');
             }
             column.text( colWidth );
+        },
 
-            // this.getData();
+        updateGrid: function ( self ) {
+            this.getData();
+            updateID = window.setTimeout(function ( ) {
+                self.updateGrid( self );
+            }, 2000, self);
         }
 
     };
