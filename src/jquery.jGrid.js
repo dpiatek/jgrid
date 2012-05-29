@@ -8,17 +8,24 @@
 
 (function($) {
 
-    // Options - default grid
-    // Listen for keyboard shortcut
-    // Show grid setup or run from cache/local storage/whatever
-    // Draw grid
-
     var jGrid = {
+
+        // Todo
+        // - press ctrl-shift-l for jgrid box
+        // - remove button submits and make them more CSS-safe
+        // - add opacity adjustment
+        // - make hide button a bit out of the box, like a pull down
+        // - add position fixed to col-width
+        // - add hide button for menu or maybe go straight to drag&drop ?
+        // - clean-up plugin
+        // - comment code
+        // - make readme
+        // - push to github
 
         // Initialize plugin
         init: function( setup ){
             var self = this;
-            this.keylistener();
+            this.keylistener( );
             this.addmenu();
 
             this.attachForm( self );
@@ -32,32 +39,27 @@
         $('body').append('<div id="jgrid-setup"><form method="get" accept-charset="utf-8" id="jgrid-form"><label for="wrapper">Wrapper</label><input type="number" name="wrapper" placeholder="960" required pattern="^[0-9]+$" title="Only integer values"><span>px</span><label for="columns">Columns</label><input type="number" name="columns" placeholder="12" required pattern="^[0-9]+$" title="Only integer values"><label for="gutter">Gutter</label><input type="number" name="gutter" placeholder="5" required pattern="^[0-9]+$" title="Only integer values"><span>px</span><label for="marLeft">Margin left</label><input type="number" name="marLeft" required pattern="^[0-9]+$" title="Only integer values"><label for="marRight">Margin right</label><input type="number" name="marRight" required pattern="^[0-9]+$" title="Only integer values"><input type="submit" value="Go"><button id="show-hide">Hide</button></form></div>');
         },
 
-        keylistener: function () {
+        keylistener: function ( ) {
             var isCtrl = false,
-                isShift = false;
+                isShift = false,
+                self = this;
 
-            $('body').keyup(function(e) {
-                if(e.which == 16) {
-                    isShift = false;
-                }
+            $('body').on('keyup', function(e) {
+                if (e.which == 16) isShift = false;
+                if (e.which == 17) isCtrl = false;
             });
 
-            $('body').keyup(function(e) {
-                if(e.which == 17) {
-                    isCtrl = false;
-                }
-            });
+            $('body').on('keydown', self, function(e) {
+                if(e.which == 17) isCtrl = true;
+                if(e.which == 16) isShift = true;
 
-            $('body').keydown(function(e) {
-                if(e.which == 17) {
-                    isCtrl = true;
-                }
-                if(e.which == 16) {
-                    isShift = true;
-                }
                 if(e.which == 76 && isCtrl && isShift) {
                     window.clearTimeout(updateID);
+
                     $('#jgrid-setup, #jgrid-overlay, #col-width').toggle();
+                    if ($('#jgrid-setup').length) {
+                        self.updateGrid( self );
+                    }
                 }
             });
         },
@@ -88,13 +90,14 @@
         calculateGrid: function( setup ) {
             var colWidth = ( setup.wrapper - setup.marLeft - setup.marRight - ( (setup.columns - 1) * setup.gutter ) ) / setup.columns;
             var checkWidth = (setup.columns * colWidth) + ( (setup.columns - 1) * setup.gutter ) + setup.marLeft + setup.marRight;
+            var percentage = ((colWidth / setup.wrapper) * 100) + '%';
 
-            console.log(checkWidth);
             console.log(colWidth);
+            console.log(checkWidth);
 
 
             this.setupGrid( colWidth , setup );
-            this.updateColsWidth( colWidth );
+            this.updateColsWidth( colWidth , percentage );
         },
 
         attachForm: function ( self ) {
@@ -107,17 +110,17 @@
         getData: function () {
             var setup = {};
 
-            setup.wrapper = parseInt($('input[name=wrapper]').val(),10);
-            setup.columns = parseInt($('input[name=columns]').val(),10);
-            setup.gutter = parseInt($('input[name=gutter]').val(),10);
-            setup.marLeft = parseInt($('input[name=marLeft]').val(),10);
-            setup.marRight = parseInt($('input[name=marRight]').val(),10);
+            setup.wrapper = parseInt($('input[name=wrapper]').val(),10) || 0;
+            setup.columns = parseInt($('input[name=columns]').val(),10) || 1;
+            setup.gutter = parseInt($('input[name=gutter]').val(),10) || 0;
+            setup.marLeft = parseInt($('input[name=marLeft]').val(),10) || 0;
+            setup.marRight = parseInt($('input[name=marRight]').val(),10) || 0;
 
-            // console.log(setup);
+            console.log(setup);
             this.calculateGrid( setup );
         },
 
-        updateColsWidth: function ( colWidth ) {
+        updateColsWidth: function ( colWidth , percentage ) {
             var column = $('#col-width');
 
             if ( !(column.length) ) {
@@ -133,6 +136,7 @@
                 column.css('color','#EEE');
             }
             column.text( colWidth );
+            column.append( '<br>' + percentage );
         },
 
         updateGrid: function ( self ) {
