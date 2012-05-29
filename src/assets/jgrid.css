@@ -1,9 +1,8 @@
-#jgrid-setup { 
-	position:fixed; 
+#jgrid-setup {position:fixed;
 	top:0; 
 	right:0; 
 	width:100px; 
-	height:336px; 
+	height:411px; 
 	background-color:#DDD; 
 	padding:0 10px; 
 	border-radius:0 0 0 5px; 
@@ -60,3 +59,15 @@
 }
 #jgrid-wrapper > span:last-child 	{ margin-right:5px; }
 #jgrid-wrapper > span:first-child 	{ margin-left:5px; }
+
+#col-width {
+	color: #EEE;
+	background-color: #555;
+	border-radius: 80px;
+	height: 100px;
+	width: 100px;
+	display: block;
+	text-align: center;
+	line-height: 92px;
+	font-size: 26px;
+}
