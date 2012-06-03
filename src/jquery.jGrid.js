@@ -21,15 +21,17 @@
         // - comment code
         // - make readme
         // - push to github
+        // - live on / off
 
         // Initialize plugin
         init: function( setup ){
-            var self = this;
-            this.keylistener( );
+            this.self = this;
+            this.updateID = null;
+            this.keylistener();
             this.addmenu();
 
-            this.attachForm( self );
-            this.updateGrid( self );
+            this.attachForm();
+            this.updateGrid();
             $('#jgrid-setup, #jgrid-overlay, #col-width').hide();
         },
 
@@ -42,30 +44,32 @@
         keylistener: function ( ) {
             var isCtrl = false,
                 isShift = false,
-                self = this;
+                that = this.self;
 
             $('body').on('keyup', function(e) {
-                if (e.which == 16) isShift = false;
-                if (e.which == 17) isCtrl = false;
+                if (e.which === 16) { isShift = false; }
+                if (e.which === 17) { isCtrl = false; }
             });
 
-            $('body').on('keydown', self, function(e) {
-                if(e.which == 17) isCtrl = true;
-                if(e.which == 16) isShift = true;
+            $('body').on('keydown', that, function(e) {
+                if(e.which === 17) { isCtrl = true; }
+                if(e.which === 16) { isShift = true; }
 
-                if(e.which == 76 && isCtrl && isShift) {
-                    window.clearTimeout(updateID);
+
+                if(e.which === 76 && isCtrl && isShift) {
+                    window.clearTimeout(this.updateID);
 
                     $('#jgrid-setup, #jgrid-overlay, #col-width').toggle();
+
                     if ($('#jgrid-setup').length) {
-                        self.updateGrid( self );
+                        that.updateGrid();
                     }
                 }
             });
         },
 
         setupGrid: function( colWidth , setup ) {
-            var cols = '';
+            var cols = '',
                 wrapper = null;
 
             if (!($('#jgrid-overlay').length)) {
@@ -76,7 +80,7 @@
             wrapper = $('#jgrid-wrapper');
             wrapper.empty();
 
-            for (i = 0; i < setup.columns; i++) {
+            for (var i = 0; i < setup.columns; i++) {
                 cols += '<span></span>';
             }
 
@@ -92,18 +96,18 @@
             var checkWidth = (setup.columns * colWidth) + ( (setup.columns - 1) * setup.gutter ) + setup.marLeft + setup.marRight;
             var percentage = ((colWidth / setup.wrapper) * 100) + '%';
 
-            console.log(colWidth);
-            console.log(checkWidth);
+            // console.log(colWidth);
+            // console.log(checkWidth);
 
 
             this.setupGrid( colWidth , setup );
             this.updateColsWidth( colWidth , percentage );
         },
 
-        attachForm: function ( self ) {
+        attachForm: function ( ) {
             $('form').on('submit',function(e){
                 e.preventDefault();
-                self.getData();
+                this.self.getData();
             });
         },
 
@@ -116,7 +120,7 @@
             setup.marLeft = parseInt($('input[name=marLeft]').val(),10) || 0;
             setup.marRight = parseInt($('input[name=marRight]').val(),10) || 0;
 
-            console.log(setup);
+            // console.log(setup);
             this.calculateGrid( setup );
         },
 
@@ -139,11 +143,12 @@
             column.append( '<br>' + percentage );
         },
 
-        updateGrid: function ( self ) {
+        updateGrid: function () {
+            that = this.self;
             this.getData();
-            updateID = window.setTimeout(function ( ) {
-                self.updateGrid( self );
-            }, 2000, self);
+            this.updateID = window.setTimeout(function ( ) {
+                that.updateGrid();
+            }, 2000, that);
         }
 
     };
