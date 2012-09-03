@@ -1,8 +1,7 @@
-#jgrid-setup {position:fixed;
-	top:0; 
+#jgrid-setup {position:fixed; top:0;
 	right:0; 
-	width:100px; 
-	height:411px; 
+	width:85px; 
+	height:370px; 
 	background-color:#DDD; 
 	padding:0 10px; 
 	border-radius:0 0 0 5px; 
@@ -10,22 +9,21 @@
 	border-bottom:1px solid #999; 
 	z-index:999;
 }
-#jgrid-form input[type=submit] , #show-hide { 
+#show-hide { 
 	display:block; 
 	width:80px; 
 	height:30px; 
 	text-transform:uppercase; 
 	border:0; 
 	border-radius:3px;
-	margin:10px 0 10px; 
-	background-color:#E54D3C; 
+	margin:10px 0 10px;
+	padding:0; 
 	color:#fff; 
 	cursor:pointer;
+	text-align:center;
+	line-height:30px;
+	background-color:#929292;
 }
-#jgrid-form input[type=submit]:hover { background-color:#992215; }
-
-#show-hide 		 {background-color:#929292; }
-#show-hide:hover { background-color:#383838; }
 
 #jgrid-form 					 { font-family: sans-serif; color:#222; font-size:14px; }
 #jgrid-form label 				 { display:block; padding:0; margin:10px 0; cursor:pointer; }
@@ -33,8 +31,6 @@
 #jgrid-form input 				 { padding:0; margin:0; border:3px solid #FFF; border-radius:3px; }
 #jgrid-form input[type=number] 	 { width:60px; height:22px;}
 #jgrid-form input[type=checkbox] { margin-right:3px; }
-
-#test { font-size:60px; width:500px; margin:0 auto; }
 
 #jgrid-overlay {
 	position:fixed;
@@ -60,14 +56,16 @@
 #jgrid-wrapper > span:last-child 	{ margin-right:5px; }
 #jgrid-wrapper > span:first-child 	{ margin-left:5px; }
 
-#col-width {
+#jgrid-col-width {
+	position:fixed;
+	top:5px;
+	left:5px;
 	color: #EEE;
 	background-color: #555;
-	border-radius: 80px;
-	height: 100px;
-	width: 100px;
+	border-radius: 5px;
+	height: 63px;
+	width: 105px;
 	display: block;
-	text-align: center;
-	line-height: 92px;
-	font-size: 26px;
+	font-size: 16px;
+	padding: 5px;
 }

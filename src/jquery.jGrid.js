@@ -22,25 +22,25 @@
         // - make readme
         // - push to github
         // - live on / off
+        // - make this library agnostic
 
         // Initialize plugin
         init: function( setup ){
             this.self = this;
-            this.updateID = null;
+            window.updateID = null;
             this.keylistener();
             this.addmenu();
-
-            this.attachForm();
             this.updateGrid();
-            $('#jgrid-setup, #jgrid-overlay, #col-width').hide();
+            $('#jgrid-setup, #jgrid-overlay, #jgrid-col-width').hide();
         },
 
         // Add styles to head and append menu to body
         addmenu: function () {
-        $('head').append('<style>#jgrid-setup {position:fixed; top:0; right:0; width:100px; height:411px; background-color:#DDD; padding:0 10px; border-radius:0 0 0 5px; border-left:1px solid #999; border-bottom:1px solid #999; z-index:999; } #jgrid-form input[type=submit] , #show-hide {display:block; width:80px; height:30px; text-transform:uppercase; border:0; border-radius:3px; margin:10px 0 10px; background-color:#E54D3C; color:#fff; cursor:pointer; } #jgrid-form input[type=submit]:hover { background-color:#992215; } #show-hide         {background-color:#929292; } #show-hide:hover { background-color:#383838; } #jgrid-form                     { font-family: sans-serif; color:#222; font-size:14px; } #jgrid-form label                  { display:block; padding:0; margin:10px 0; cursor:pointer; } #jgrid-form input                  { padding:0; margin:0; border:3px solid #FFF; border-radius:3px; } #jgrid-form input[type=number]   { width:60px; height:22px;} #jgrid-form input[type=checkbox] { margin-right:3px; } #test { font-size:60px; width:500px; margin:0 auto; } #jgrid-overlay {position:fixed; top:0; left:0; width:100%; height:100%; background-color:#000; opacity:0.2; z-index:997; } #jgrid-wrapper         { width:960px; margin:0 auto; background-color:rgb(255, 192, 203); height:100%; z-index:998; } #jgrid-wrapper > span {width:70px; margin-right:10px; height:100%; background-color:#000; opacity:0.3; display:block; float:left; } #jgrid-wrapper > span:last-child     { margin-right:5px; } #jgrid-wrapper > span:first-child     { margin-left:5px; } #col-width {color: #EEE; background-color: #555; border-radius: 80px; height: 100px; width: 100px; display: block; text-align: center; line-height: 92px; font-size: 26px; }</style>');
-        $('body').append('<div id="jgrid-setup"><form method="get" accept-charset="utf-8" id="jgrid-form"><label for="wrapper">Wrapper</label><input type="number" name="wrapper" placeholder="960" required pattern="^[0-9]+$" title="Only integer values"><span>px</span><label for="columns">Columns</label><input type="number" name="columns" placeholder="12" required pattern="^[0-9]+$" title="Only integer values"><label for="gutter">Gutter</label><input type="number" name="gutter" placeholder="5" required pattern="^[0-9]+$" title="Only integer values"><span>px</span><label for="marLeft">Margin left</label><input type="number" name="marLeft" required pattern="^[0-9]+$" title="Only integer values"><label for="marRight">Margin right</label><input type="number" name="marRight" required pattern="^[0-9]+$" title="Only integer values"><input type="submit" value="Go"><button id="show-hide">Hide</button></form></div>');
+        $('head').append('<style>#jgrid-setup {position:fixed; top:0; right:0; width:85px; height:370px; background-color:#DDD; padding:0 10px; border-radius:0 0 0 5px; border-left:1px solid #999; border-bottom:1px solid #999; z-index:999; } #show-hide {display:block; width:80px; height:30px; text-transform:uppercase; border:0; border-radius:3px; margin:10px 0 10px; padding:0; color:#fff; cursor:pointer; text-align:center; line-height:30px; background-color:#929292; } #jgrid-form                     { font-family: sans-serif; color:#222; font-size:14px; } #jgrid-form label                  { display:block; padding:0; margin:10px 0; cursor:pointer; } #jgrid-form input                  { padding:0; margin:0; border:3px solid #FFF; border-radius:3px; } #jgrid-form input[type=number]   { width:60px; height:22px;} #jgrid-form input[type=checkbox] { margin-right:3px; } #jgrid-overlay {position:fixed; top:0; left:0; width:100%; height:100%; background-color:#000; opacity:0.2; z-index:997; } #jgrid-wrapper       { width:960px; margin:0 auto; background-color:rgb(255, 192, 203); height:100%; z-index:998; } #jgrid-wrapper > span {width:70px; margin-right:10px; height:100%; background-color:#000; opacity:0.3; display:block; float:left; } #jgrid-wrapper > span:last-child     { margin-right:5px; } #jgrid-wrapper > span:first-child     { margin-left:5px; } #jgrid-col-width {position:fixed; top:5px; left:5px; color: #EEE; background-color: #555; border-radius: 5px; height: 63px; width: 105px; display: block; font-size: 16px; padding: 5px; }</style>');
+        $('body').append('<div id="jgrid-setup"><form method="get" accept-charset="utf-8" id="jgrid-form"><label for="wrapper">Wrapper</label><input type="number" name="wrapper" placeholder="960" required pattern="^[0-9]+$" title="Only integer values"><span>px</span><label for="columns">Columns</label><input type="number" name="columns" placeholder="12" required pattern="^[0-9]+$" title="Only integer values"><label for="gutter">Gutter</label><input type="number" name="gutter" placeholder="5" required pattern="^[0-9]+$" title="Only integer values"><span>px</span><label for="marLeft">Margin left</label><input type="number" name="marLeft" required pattern="^[0-9]+$" title="Only integer values"><label for="marRight">Margin right</label><input type="number" name="marRight" required pattern="^[0-9]+$" title="Only integer values"><span id="show-hide">Hide</span></form></div>');
         },
 
+        // Listen for Ctrl + Alt + l to toggle grid display
         keylistener: function ( ) {
             var isCtrl = false,
                 isShift = false,
@@ -51,17 +51,19 @@
                 if (e.which === 17) { isCtrl = false; }
             });
 
-            $('body').on('keydown', that, function(e) {
+            $('body').on('keydown', that , function(e) {
                 if(e.which === 17) { isCtrl = true; }
                 if(e.which === 16) { isShift = true; }
 
 
                 if(e.which === 76 && isCtrl && isShift) {
-                    window.clearTimeout(this.updateID);
+                    window.clearTimeout(that.updateID);
 
-                    $('#jgrid-setup, #jgrid-overlay, #col-width').toggle();
+                    // console.log(window.updateID);
 
-                    if ($('#jgrid-setup').length) {
+                    $('#jgrid-setup, #jgrid-overlay, #jgrid-col-width').toggle();
+
+                    if ($('#jgrid-setup').css('display') !== 'none') {
                         that.updateGrid();
                     }
                 }
@@ -94,24 +96,13 @@
         calculateGrid: function( setup ) {
             var colWidth = ( setup.wrapper - setup.marLeft - setup.marRight - ( (setup.columns - 1) * setup.gutter ) ) / setup.columns;
             var checkWidth = (setup.columns * colWidth) + ( (setup.columns - 1) * setup.gutter ) + setup.marLeft + setup.marRight;
-            var percentage = ((colWidth / setup.wrapper) * 100) + '%';
-
-            // console.log(colWidth);
-            // console.log(checkWidth);
-
+            var percentage = ( Math.round((colWidth / setup.wrapper) * 10000) / 1000 );
 
             this.setupGrid( colWidth , setup );
-            this.updateColsWidth( colWidth , percentage );
+            this.updateColWidth( colWidth , percentage );
         },
 
-        attachForm: function ( ) {
-            $('form').on('submit',function(e){
-                e.preventDefault();
-                this.self.getData();
-            });
-        },
-
-        getData: function () {
+        getDimensions: function () {
             var setup = {};
 
             setup.wrapper = parseInt($('input[name=wrapper]').val(),10) || 0;
@@ -124,37 +115,43 @@
             this.calculateGrid( setup );
         },
 
-        updateColsWidth: function ( colWidth , percentage ) {
-            var column = $('#col-width');
+        updateColWidth: function ( colWidth , percentage ) {
+            var widthDisplay = $('#jgrid-col-width');
 
-            if ( !(column.length) ) {
-                $('body').append('<span id="col-width"></span>');
-                column = $('#col-width');
+            if ( !(widthDisplay.length) ) {
+                $('body').append('<span id="jgrid-col-width"></span>');
+                widthDisplay = $('#jgrid-col-width');
             }
-            
+
             if (!(typeof colWidth === 'number' && (colWidth % 1 === 0) )) {
                 colWidth = Math.round( colWidth*100 ) / 100;
-                column.css('color','#F00');
+                widthDisplay.css('color','#F55');
             } else {
                 colWidth = colWidth + 'px';
-                column.css('color','#EEE');
+                widthDisplay.css('color','#DDD');
             }
-            column.text( colWidth );
-            column.append( '<br>' + percentage );
+            console.log(isNaN(percentage));
+            percentage = isNaN(percentage) ? '0%' : percentage + '%';
+            widthDisplay.text( 'Column width: ' + colWidth );
+            widthDisplay.append( '<br>' + percentage );
         },
 
         updateGrid: function () {
             that = this.self;
-            this.getData();
+            this.getDimensions();
             this.updateID = window.setTimeout(function ( ) {
                 that.updateGrid();
-            }, 2000, that);
+            }, 1000, that);
         }
 
     };
 
     jGrid.init();
 
+    return {
+
+    }
+
     // return $.initGrid = jGrid.calculateGrid({ wrapper:960, columns:12, gutter:10, marLeft:5, marRight:5 });
-        
+
 }(jQuery));
