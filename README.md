@@ -5,14 +5,14 @@ Switch on / off a grid overlay on your website.
 ## Getting Started
 Download the [production version][min] or the [development version][max].
 
-[min]: https://raw.github.com/dpiatek/jquery.jGrid/master/dist/jquery.jGrid.min.js
-[max]: https://raw.github.com/dpiatek/jquery.jGrid/master/dist/jquery.jGrid.js
+[min]: https://raw.github.com/dpiatek/jgrid/master/dist/jquery.jGrid.min.js
+[max]: https://raw.github.com/dpiatek/jgrid/master/dist/jquery.jGrid.js
 
 In your web page:
 
 ```html
 <script src="jquery.js"></script>
-<script src="dist/jquery.jGrid.min.js"></script>
+<script src="jquery.jGrid.min.js"></script>
 ```
 
 And press Ctrl + Shift + L to show the grid.
