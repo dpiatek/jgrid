@@ -1,10 +1,6 @@
-/*
- * jquery.jGrid
- * https://github.com/dpiatek/jGrid
- *
- * Copyright (c) 2012 Dominik Piatek
- * Licensed under the MIT, GPL licenses.
- */
+/*! jGrid Plugin - v0.1.0 - 2012-09-03
+* https://github.com/dpiatek/jgrid
+* Copyright (c) 2012 Dominik Piatek; Licensed MIT */
 
 (function($) {
 
